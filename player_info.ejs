@@ -1,0 +1,126 @@
+<% include ../partials/header %>
+<% include ../partials/menu %>
+	<div class="container">
+		<br>
+		<div class="row">
+			<div class="col-4">
+				<div class="card">
+				<!-- TODO: Modify the ejs code below, to conditionally set the image_src to be from our chosen player -->
+
+					<% 
+					if(player_info){
+					var year = '';
+					var major = '';
+					var gp = '';
+					var py = '';
+					var ry = '';
+					var recy = '';
+					var img ='';
+
+					player_info.forEach(function(item){
+					img = item.img_src;
+					year = item.year;
+					major = item.major;
+					py = item.passing_yards;
+					ry = item.rushing_yards
+					recy = item.receiving_yards;
+
+				});
+				%>
+				
+				<% } %>
+
+				<%
+				if(games_played){
+				var gp = '';
+
+				games_played.forEach(function(item1){
+				gp = item1.count;
+
+			});
+			%>
+			<% } %>
+
+
+				<%
+				  var image_src = '../resources/img/helmet.jpg';
+				  
+				  if(img) {
+				  
+				  	image_src = img;
+				  	
+				  }
+				%>  
+				 
+				 <img class="card-img-top" id="player_img" src= "<%- image_src %>" alt="Image of Football Player">
+				  <div class="card-body mx-auto">
+					<form class="form"action="/player_info" method="get">
+						<select class="custom-select" name="player_choice" onchange="this.form.submit(player_choice)">
+							 <option selected>Select Player</option>
+							 <!-- TODO: Populate our select with player options
+							 			For each player, set a new option with a value matching the palyer's id, 
+							 			but will display the player's name-->
+
+
+
+								<%
+								if(players){
+
+								var options = '';
+								players.forEach(function(item){
+								 options += '<option value=' + item.id+ '>' + item.name + '</option>';
+
+							});  
+							%>
+							<%- options %>
+							<% } %>
+
+						</select>
+					</form>
+				  </div>
+				</div>
+			</div>
+			<div class="col-8">
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<!-- TODO: Set Player Information
+							 			If a player has been selected, fill in their information in each of the fields below.
+							 		    You'll need to calculate here the player's average rushing, receiving, and passing yards.-->
+
+
+
+
+							 		
+
+							 		  
+							<th>Year</th>
+							<td> <%- year %>	</td>
+						</tr>
+						<tr>
+							<th>Major</th>
+							<td><%- major %>	</td>
+						</tr>
+						<tr>
+							<th>Games Played</th>
+							<td><%- gp %>	</td>
+						</tr>
+						<tr>
+							<td>Passing Yards: <%- py %></td>
+							<td>Avg. Passing Yards: <%- py/gp %></td>
+						</tr>
+						<tr>
+							<td>Rushing Yards: <%- ry %> </td>
+							<td>Avg. Rushing Yards: <%- ry/gp %></td>
+						</tr>
+						<tr>
+							<td>Receiving Yards: <%- recy %> </td>
+							<td>Avg. Receiving Yards: <%- recy/gp %></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+<% include ../partials/footer %>
